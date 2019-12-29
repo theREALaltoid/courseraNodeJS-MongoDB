@@ -20,7 +20,6 @@ function solveRect(l, b) {
           " and b = " +
           b +
           " is " +
-          "al" +
           rectangle.perimeter()
       );
     }
