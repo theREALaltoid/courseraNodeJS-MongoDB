@@ -4,8 +4,10 @@ const morgan = require("morgan");
 
 const hostname = "localhost";
 const port = 3000;
+const dishRouter = require("./routes/dishRouter");
 
 const app = express();
+const bodyParser = require("body-parser");
 
 app.use(morgan("dev"));
 
@@ -14,5 +16,7 @@ app.use(express.static(__dirname + "/public"));
 const server = http.createServer(app);
 
 server.listen(port, hostname, () => {
-  console.log(`Server running at http://${hostname}:${port}/`);
+  app.use(bodyParser.json());
+
+  app.use("/dishes", dishRouter);
 });
