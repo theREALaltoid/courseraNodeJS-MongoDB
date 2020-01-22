@@ -1,10 +1,10 @@
-var express = require("express");
+let express = require("express");
 const bodyParser = require("body-parser");
-var User = require("../models/user");
-var passport = require("passport");
-var userRouter = express.Router();
+let User = require("../models/user");
+let passport = require("passport");
+let userRouter = express.Router();
 const authenticate = require("../authenticate");
-
+const cors = require("./cors");
 userRouter.use(bodyParser.json());
 /* GET users listing. */
 userRouter
@@ -71,7 +71,7 @@ userRouter.post(
   cors.corsWithOptions,
   passport.authenticate("local"),
   (req, res) => {
-    var token = authenticate.getToken({ _id: req.user._id });
+    let token = authenticate.getToken({ _id: req.user._id });
     res.statusCode = 200;
     res.setHeader("Content-Type", "application/json");
     res.json({
@@ -88,7 +88,7 @@ userRouter.get("/logout", cors.corsWithOptions, (req, res) => {
     res.clearCookie("session-id");
     res.redirect("/");
   } else {
-    var err = new Error("You are not logged in!");
+    let err = new Error("You are not logged in!");
     err.status = 403;
     next(err);
     response.end();

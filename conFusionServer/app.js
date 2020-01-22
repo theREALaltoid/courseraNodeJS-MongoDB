@@ -1,23 +1,23 @@
-var createError = require("http-errors");
-var express = require("express");
-var path = require("path");
+let createError = require("http-errors");
+let express = require("express");
+let path = require("path");
 
-var passport = require("passport");
-var authenticate = require("./authenticate");
-var config = require("./config.js");
-var logger = require("morgan");
-var session = require("express-session");
-var FileStore = require("session-file-store")(session);
+let passport = require("passport");
+let authenticate = require("./authenticate");
+let config = require("./config.js");
+let logger = require("morgan");
+let session = require("express-session");
+let FileStore = require("session-file-store")(session);
 
-var indexRouter = require("./routes/index");
-var dishRouter = require("./routes/dishRouter");
-var promoRouter = require("./routes/promoRouter");
-var leaderRouter = require("./routes/leaderRouter");
-var userRouter = require("./routes/users");
-var uploadRouter = require("./routes/uploadRouter");
+let indexRouter = require("./routes/index");
+let dishRouter = require("./routes/dishRouter");
+let promoRouter = require("./routes/promoRouter");
+let leaderRouter = require("./routes/leaderRouter");
+let userRouter = require("./routes/users");
+let uploadRouter = require("./routes/uploadRouter");
 
-var cookieParser = require("cookie-parser");
-var app = express();
+let cookieParser = require("cookie-parser");
+let app = express();
 app.all("*", (req, res, next) => {
   if (req.secure) {
     return next();

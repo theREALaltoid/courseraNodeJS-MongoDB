@@ -4,8 +4,8 @@ const mongoose = require("mongoose");
 const authenticate = require("../authenticate");
 const cors = require("./cors");
 const Dishes = require("../models/dishes");
-var config = require("../config.js");
-var User = require("../models/user");
+let config = require("../config.js");
+let User = require("../models/user");
 
 const dishRouter = express.Router();
 
@@ -13,8 +13,7 @@ dishRouter.use(bodyParser.json());
 
 dishRouter
   .route("/")
-  .options(cors.cors, (req, res) => {
-    console.log("test");
+  .options(cors.corsWithOptions, (req, res) => {
     res.sendStatus(200);
   })
   .get(cors.cors, (req, res, next) => {
@@ -221,7 +220,7 @@ dishRouter
         .then(
           dish => {
             if (dish != null) {
-              for (var i = dish.comments.length - 1; i >= 0; i--) {
+              for (let i = dish.comments.length - 1; i >= 0; i--) {
                 dish.comments.id(dish.comments[i]._id).remove();
               }
               dish.save().then(

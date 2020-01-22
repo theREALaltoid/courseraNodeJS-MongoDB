@@ -1,11 +1,11 @@
-var passport = require("passport");
-var LocalStrategy = require("passport-local").Strategy;
-var User = require("./models/user");
-var passport = require("passport");
-var JwtStrategy = require("passport-jwt").Strategy;
-var ExtractJwt = require("passport-jwt").ExtractJwt;
-var jwt = require("jsonwebtoken");
-var config = require("./config.js");
+let passport = require("passport");
+let LocalStrategy = require("passport-local").Strategy;
+let User = require("./models/user");
+
+let JwtStrategy = require("passport-jwt").Strategy;
+let ExtractJwt = require("passport-jwt").ExtractJwt;
+let jwt = require("jsonwebtoken");
+let config = require("./config.js");
 const Dishes = require("./models/dishes");
 
 exports.local = passport.use(new LocalStrategy(User.authenticate()));
@@ -16,7 +16,7 @@ exports.getToken = function(user) {
   return jwt.sign(user, config.secretKey, { expiresIn: 3600 });
 };
 
-var opts = {};
+let opts = {};
 opts.jwtFromRequest = ExtractJwt.fromAuthHeaderAsBearerToken();
 opts.secretOrKey = config.secretKey;
 
