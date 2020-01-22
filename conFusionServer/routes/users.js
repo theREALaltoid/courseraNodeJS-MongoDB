@@ -9,21 +9,30 @@ userRouter.use(bodyParser.json());
 /* GET users listing. */
 userRouter
   .route("/")
+  .options(cors.corsWithOptions, (req, res) => {
+    res.sendStatus(200);
+  })
 
-  .get(authenticate.verifyUser, authenticate.verifyAdmin, (req, res, next) => {
-    User.find({})
-      .then(
-        users => {
-          res.statusCode = 200;
-          res.setHeader("Content-Type", "application/json");
-          res.json(users);
-        },
-        err => next(err)
-      )
-      .catch(err => next(err));
-  });
+  .get(
+    cors.corsWithOptions,
 
-userRouter.post("/signup", (req, res, next) => {
+    authenticate.verifyUser,
+    authenticate.verifyAdmin,
+    (req, res, next) => {
+      User.find({})
+        .then(
+          users => {
+            res.statusCode = 200;
+            res.setHeader("Content-Type", "application/json");
+            res.json(users);
+          },
+          err => next(err)
+        )
+        .catch(err => next(err));
+    }
+  );
+
+userRouter.post("/signup", cors.corsWithOptions, (req, res, next) => {
   User.register(
     new User({ username: req.body.username }),
     req.body.password,
@@ -57,18 +66,23 @@ userRouter.post("/signup", (req, res, next) => {
   );
 });
 
-userRouter.post("/login", passport.authenticate("local"), (req, res) => {
-  var token = authenticate.getToken({ _id: req.user._id });
-  res.statusCode = 200;
-  res.setHeader("Content-Type", "application/json");
-  res.json({
-    success: true,
-    token: token,
-    status: "You are successfully logged in!"
-  });
-});
+userRouter.post(
+  "/login",
+  cors.corsWithOptions,
+  passport.authenticate("local"),
+  (req, res) => {
+    var token = authenticate.getToken({ _id: req.user._id });
+    res.statusCode = 200;
+    res.setHeader("Content-Type", "application/json");
+    res.json({
+      success: true,
+      token: token,
+      status: "You are successfully logged in!"
+    });
+  }
+);
 
-userRouter.get("/logout", (req, res) => {
+userRouter.get("/logout", cors.corsWithOptions, (req, res) => {
   if (req.session) {
     req.session.destroy();
     res.clearCookie("session-id");
