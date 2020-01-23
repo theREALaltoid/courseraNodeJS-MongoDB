@@ -7,6 +7,7 @@ let ExtractJwt = require("passport-jwt").ExtractJwt;
 let jwt = require("jsonwebtoken");
 let config = require("./config.js");
 const Dishes = require("./models/dishes");
+const Favorites = require("./models/favoriteSchema");
 
 exports.local = passport.use(new LocalStrategy(User.authenticate()));
 passport.serializeUser(User.serializeUser());
@@ -63,4 +64,18 @@ exports.verifyPoster = (req, err, next) => {
         return next(err);
       }
     });
+};
+
+exports.verifyListOwner = (req, err, next) => {
+  let id = req.user._id;
+
+  Favorites.findOne({ postedBy: req.user._id }, (err, user) => {
+    if (user) {
+      next();
+    } else {
+      err = new Error("You are not an the author. Access Denied");
+      err.status = 403;
+      return next(err);
+    }
+  });
 };

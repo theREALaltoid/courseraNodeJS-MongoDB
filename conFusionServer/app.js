@@ -15,7 +15,7 @@ let promoRouter = require("./routes/promoRouter");
 let leaderRouter = require("./routes/leaderRouter");
 let userRouter = require("./routes/users");
 let uploadRouter = require("./routes/uploadRouter");
-
+let favoriteRouter = require("./routes/favorites");
 let cookieParser = require("cookie-parser");
 let app = express();
 app.all("*", (req, res, next) => {
@@ -59,7 +59,7 @@ app.use("/", indexRouter);
 app.use("/users", userRouter);
 
 app.use(express.static(path.join(__dirname, "public")));
-
+app.use("/favorites", favoriteRouter);
 app.use("/dishes", dishRouter);
 app.use("/promotions", promoRouter);
 app.use("/leaders", leaderRouter);
