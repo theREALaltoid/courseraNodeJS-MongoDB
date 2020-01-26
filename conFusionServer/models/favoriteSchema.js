@@ -3,7 +3,7 @@ const Schema = mongoose.Schema;
 
 const favoriteSchema = new Schema(
   {
-    dishes: [{ type: mongoose.Schema.Types.ObjectId, ref: "User" }],
+    dishes: [{ type: mongoose.Schema.Types.ObjectId, ref: "Dish" }],
 
     postedBy: {
       type: mongoose.Schema.Types.ObjectId,
