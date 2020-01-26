@@ -59,7 +59,7 @@ app.use("/", indexRouter);
 app.use("/users", userRouter);
 
 app.use(express.static(path.join(__dirname, "public")));
-app.use("/favoriteRouter", favoriteRouter);
+app.use("/favorites", favoriteRouter);
 app.use("/dishes", dishRouter);
 app.use("/promotions", promoRouter);
 app.use("/leaders", leaderRouter);

@@ -118,6 +118,7 @@ favoriteRouter
   .route("/")
 
   .get(
+    cors.cors,
     authenticate.verifyUser,
     authenticate.verifyListOwner,
     (req, res, next) => {
@@ -125,13 +126,14 @@ favoriteRouter
     }
   )
 
-  .post(authenticate.verifyUser, (req, res, next) => {
+  .post(cors.corsWithOptions, authenticate.verifyUser, (req, res, next) => {
     //We need to Filter out Repeated dishes
     let onesToTest = [...new Set(req.body.map(data => data._id))];
     fetch(req, res, onesToTest);
   })
 
   .delete(
+    cors.corsWithOptions,
     authenticate.verifyUser,
     authenticate.verifyListOwner,
     (req, res, err) => {
@@ -148,11 +150,11 @@ favoriteRouter
 
 favoriteRouter
   .route("/:dishId")
-  .post(authenticate.verifyUser, (req, res, next) => {
+  .post(cors.corsWithOptions, authenticate.verifyUser, (req, res, next) => {
     let onesToTest = [req.params.dishId];
     fetch(req, res, onesToTest);
   })
-  .delete(authenticate.verifyUser, (req, res, next) => {
+  .delete(cors.corsWithOptions, authenticate.verifyUser, (req, res, next) => {
     Favorites.findOneAndUpdate(
       { postedBy: req.user._id },
       { $pull: { dishes: req.params.dishId } }
