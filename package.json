@@ -10,7 +10,7 @@
   "author": "Jogesh Muppala",
   "license": "ISC",
   "dependencies": {
-    "express": "^4.17.1",
+    "express": "^4.17.3",
     "passport-jwt": "^4.0.0"
   }
 }
